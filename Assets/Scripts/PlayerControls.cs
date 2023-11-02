@@ -7,7 +7,7 @@ public class PlayerControls : MonoBehaviour
 
 
     //Game manager object
-    [HeaderAttribute("Game Controller Object for controlling game")]
+    [Header("Game Controller Object for controlling game")]
     public GameController gameController;
     [Header("Default Velocity")]
     public float velocity = 5;
@@ -30,17 +30,33 @@ public class PlayerControls : MonoBehaviour
         objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
 
         //Update is called once per frame 
-        void Update()
-        { }
-        //If the left mouse button is clicked
-        if (Input.GetMouseButtonDown(0))
-        {
-            //The bird will float up on the Y axis
-            //and float back down on Y axis
-            rb.velocity = Vector2.up * velocity;
-        }
 
     }
+   
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            rb.velocity = Vector2.up * velocity;
 
+        }
+            
 
+            
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "HighSpike" || collision.gameObject.tag == "LowSpike" || collision.gameObject.tag == "Ground")
+        {
+            GameObject.Find("GameController").GetComponent<GameController>().GameOver();
+        }
+    }
 }
+
+   // private void OnCollisionEnter2D(Collision2D collision)
+    /*if (collision.gameObject.tag == "HighSpike" || collision.gameObject.tag == "LowSpike" || collision.gameObject.tag == "Ground")
+{
+    Time.timeScale = 0;*/
+
